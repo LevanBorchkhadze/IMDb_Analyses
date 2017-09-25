@@ -16,13 +16,24 @@ with open('movie_metadata.csv', 'r', encoding="UTF-8") as f:
         movie_title.append(row["movie_title"])
         revenue.append(budget + gross)
 
-imdb_rating_clean = [i for i in imdb_rating if i > 0]
-print(len(imdb_rating_clean))
-gross_clean = [i for i in gross if i > 0]
-print(len(gross_clean))
-budget_clean = [i for i in budget if i > 0]
-print(len(revenue))
 
-print(numpy.corrcoef(imdb_rating, budget))
-plt.scatter(imdb_rating, budget)
+gross_clean_indexes = [index for index, value in enumerate(gross) if value > 50]
+
+gross_clean = []
+ratings_clean = []
+budget_clean = []
+
+for index in gross_clean_indexes:
+    gross_clean.append(gross[index])
+for index in gross_clean_indexes:
+    ratings_clean.append(imdb_rating[index])
+for index in gross_clean_indexes:
+    budget_clean.append(budget[index])
+
+print(numpy.corrcoef(ratings_clean, gross_clean))
+print(numpy.corrcoef(ratings_clean, budget_clean))
+print(numpy.corrcoef(budget_clean, gross_clean))
+
+plt.scatter(budget_clean, gross_clean)
 plt.show()
+
