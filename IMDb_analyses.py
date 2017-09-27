@@ -8,20 +8,29 @@ with open('movie_metadata.csv', 'r', encoding="UTF-8") as f:
     budget = []
     imdb_rating = []
     movie_title = []
-    revenue = []
+    genres = []
+    num_of_votes = []
+    actor_1_name = []
+    actor_2_name = []
+    actor_3_name = []
+    director = []
     for row in reader:
         gross.append(float(row["gross"]))
         budget.append(float(row["budget"]))
         imdb_rating.append(float(row["imdb_score"]))
         movie_title.append(row["movie_title"])
-        revenue.append(budget + gross)
-
-
-gross_clean_indexes = [index for index, value in enumerate(gross) if value > 50]
+        genres.append(row["genres"])
+        num_of_votes.append((float(row["num_voted_users"])))
+        actor_1_name.append(row["actor_1_name"])
+        actor_2_name.append(row["actor_2_name"])
+        actor_3_name.append(row["actor_3_name"])
+        director.append(row["director_name"])
+gross_clean_indexes = [index for index, value in enumerate(gross) if value > 0]
 
 gross_clean = []
 ratings_clean = []
 budget_clean = []
+
 
 for index in gross_clean_indexes:
     gross_clean.append(gross[index])
@@ -30,10 +39,31 @@ for index in gross_clean_indexes:
 for index in gross_clean_indexes:
     budget_clean.append(budget[index])
 
-print(numpy.corrcoef(ratings_clean, gross_clean))
-print(numpy.corrcoef(ratings_clean, budget_clean))
-print(numpy.corrcoef(budget_clean, gross_clean))
+gross_clean = numpy.array(gross_clean)
+ratings_clean = numpy.array(ratings_clean)
+budget_clean = numpy.array(budget_clean)
+profit = (gross_clean - budget_clean)
 
-plt.scatter(budget_clean, gross_clean)
-plt.show()
+# print(numpy.corrcoef(ratings_clean, gross_clean)[1][0])
+# print(numpy.corrcoef(ratings_clean, budget_clean)[1][0])
+# print(numpy.corrcoef(budget_clean, gross_clean)[1][0])
+# print(numpy.corrcoef(ratings_clean, profit)[1][0])
+# plt.scatter(ratings_clean, profit)
+# plt.show()
 
+num_of_votes_above_10000 = []
+
+num_of_votes_above_10000 = [num_of_votes_above_10000.append for r in num_of_votes if r > 10000]
+
+
+print(len(num_of_votes_above_10000))
+# print(imdb_rating[enumerate(movie_title["Quantum of Solace"])])
+# print(enumerate(movie_title["Quantum of Solace"]))
+
+imdb_rating_asd = [title for title, value in enumerate(movie_title) if value == "Quantum of Solace "]
+# imdb_rating_index =int(imdb_rating_asd)
+print(imdb_rating_asd)
+# print(imdb_rating[imdb_rating_asd])
+
+# for genre in genres:
+# print(genre)
