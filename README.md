@@ -59,11 +59,13 @@ Based on inputed actor name (if exists in database), the module gives following 
 12.Average profit
 
 ## **TO DO**
+### Celaning the data
 According to calculations made, correlation between movie rating and gross/profit increses as the number of voters increse. 
 Based on the result we assume that we should work only with movies with at least 7,000 votes. There are lots of rows with no gross information, 
 and it also should be cleande. As a result we'll have abput 3,500 rows instead of initial 5,000. Data aslo consists lots of rows that we're 
 not going to use, which means that we have to delete following columns: color, num_critic_for_reviews, director_facebook_likes,  actor_3_facebook_likes, actor_1_facebook_likes, cast_total_facebook_likes, facenumber_in_poster, plot_keywords, movie_imdb_link, num_user_for_reviews, language, country, content_rating, actor_2_facebook_likes, aspect_ratio.
 
+### Creating functions for calculations
 
  
 
