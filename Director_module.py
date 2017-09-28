@@ -45,13 +45,15 @@ for i, x in enumerate(directors):
         director_budget.append(budget[i])
         director_gross.append(gross[i])
         # director_total_actors.append(actor_1_name[i]  + ",", actor_2_name[i] + ",", actor_3_name[i] + ".")
-        print("The average rating for", title, "is", round(np.mean(director_ratings)))
-        print("The average budget for", title, "is", round(np.mean(director_budget)))
-        print("The average gross revenue for", title, "is", round(np.mean(director_gross)))
-        print("The average profit for", round(np.mean(director_gross)) - round(np.mean(director_budget)))
-    else:
-        print("Name of the director was not found in database")
-        break
+       
+print(director_ratings)
+print("The average rating for", title, "is", round(np.mean(director_ratings), 2))
+print("The average budget for", title, "is", round(np.mean(director_budget)))
+print("The average gross revenue for", title, "is", round(np.mean(director_gross), 2))
+print("The average profit for", round((np.mean(director_gross) - np.mean(director_budget)), 2))
+    # else:
+    #     print("Name of the director was not found in database")
+    #     break
 
 print(np.corrcoef(num_of_votes, gross)[1][0])
 print(np.corrcoef(num_of_votes, imdb_rating)[1][0])
