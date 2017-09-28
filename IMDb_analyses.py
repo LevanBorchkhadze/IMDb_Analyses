@@ -2,7 +2,7 @@ import csv
 import numpy
 import matplotlib.pyplot as plt
 
-with open('movie_metadata.csv', 'r', encoding="UTF-8") as f:
+with open('clean_movie_data.csv', 'r') as f:
     reader = csv.DictReader(f)
     gross = []
     budget = []
@@ -26,7 +26,11 @@ with open('movie_metadata.csv', 'r', encoding="UTF-8") as f:
         actor_3_name.append(row["actor_3_name"])
         director.append(row["director_name"])
 gross_clean_indexes = [index for index, value in enumerate(gross) if value > 0]
+num_of_votes_above_8000 = [index for index, value in enumerate(num_of_votes) if value < 8000]
 
+
+print(gross_clean_indexes)
+print(num_of_votes_above_8000)
 gross_clean = []
 ratings_clean = []
 budget_clean = []
@@ -51,18 +55,19 @@ profit = (gross_clean - budget_clean)
 # plt.scatter(ratings_clean, profit)
 # plt.show()
 
-num_of_votes_above_10000 = []
+# num_of_votes_above_10000 = []
+#
+# num_of_votes_above_10000 = [num_of_votes_above_10000.append for r in num_of_votes if r > 10000]
 
-num_of_votes_above_10000 = [num_of_votes_above_10000.append for r in num_of_votes if r > 10000]
 
-
-print(len(num_of_votes_above_10000))
+# print(len(num_of_votes_above_10000))
 # print(imdb_rating[enumerate(movie_title["Quantum of Solace"])])
 # print(enumerate(movie_title["Quantum of Solace"]))
 
-imdb_rating_asd = [title for title, value in enumerate(movie_title) if value == "Quantum of Solace "]
+
+# imdb_rating_asd = [title for title, value in enumerate(movie_title) if value == "Quantum of Solace "]
 # imdb_rating_index =int(imdb_rating_asd)
-print(imdb_rating_asd)
+# print(imdb_rating_asd)
 # print(imdb_rating[imdb_rating_asd])
 
 # for genre in genres:
