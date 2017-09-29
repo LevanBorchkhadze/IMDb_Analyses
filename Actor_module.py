@@ -2,6 +2,7 @@ import csv
 from collections import Counter
 import numpy as np
 import re
+import matplotlib.pyplot as plt
 
 actor_name_input = input("Please input name of the actor >")
 with open('clean_movie_data.csv', 'r',) as f:
@@ -34,11 +35,17 @@ actors_gross = []
 actors_budget = []
 actors_movies = []
 actors_director = []
+actor_actors_1 = []
+actor_actors_2 = []
+actor_actors_3 = []
 actors_director_indexes = []
 director_ratings = []
 actors_genres = []
 genre_ratings = []
 actors_genre_ratings = []
+
+
+total_actors = actor_1_name + actor_2_name + actor_3_name
 
 
 for i, (a1, a2, a3) in enumerate(zip(actor_1_name, actor_2_name, actor_3_name)):
@@ -54,7 +61,7 @@ for i, (a1, a2, a3) in enumerate(zip(actor_1_name, actor_2_name, actor_3_name)):
 top_3_movies = sorted(zip(actors_ratings, actors_movies), reverse=True)[:3]
 
 dc = Counter(actors_director)
-top_3_actors = dc.most_common(3)
+top_3_directors = dc.most_common(3)
 
 tot_actor_genres = [item for word in actors_genres for item in word.split('|')]
 g = Counter(tot_actor_genres)
@@ -62,7 +69,7 @@ top_3_genre = g.most_common(3)
 
 for i, (a1, a2, a3) in enumerate(zip(actor_1_name, actor_2_name, actor_3_name)):
     if (a1 == actor_name_input or a2 == actor_name_input or a3 == actor_name_input) and\
-                    directors[i] == top_3_actors[0][0]:
+                    directors[i] == top_3_directors[0][0]:
         actors_director_indexes.append(i)
 
 for i in actors_director_indexes:
@@ -78,25 +85,34 @@ for i, v in enumerate(genres):
         actors_genre_ratings.append(imdb_rating[i])
 
 
-print("Three most successful movies of", actor_name_input, "are:", "\n", top_3_movies[0][1], "-", top_3_movies[0][0], "\n",
+print("Three most successful movies of", actor_name_input, "are:", "\n", top_3_movies[0][1], "-",
+      top_3_movies[0][0], "\n",
       top_3_movies[1][1], "-", top_3_movies[1][0], "\n",
       top_3_movies[2][1], "-", top_3_movies[2][0])
-print("Top three co-works:", top_3_actors[0][0], "-", top_3_actors[0][1], "|", top_3_actors[1][0], "-", top_3_actors[1][1], "|",
-      top_3_actors[2][0], "-", top_3_actors[2][1])
-print("Average movie rating for", actor_name_input, "and his most frequent co-work", top_3_actors[0][0], "is:", round(np.mean(director_ratings), 2))
+print("Top three co-works:", top_3_directors[0][0], "-", top_3_directors[0][1], "|", top_3_directors[1][0], "-",
+      top_3_directors[1][1], "|", top_3_directors[2][0], "-", top_3_directors[2][1])
+print("Average movie rating for", actor_name_input, "and his most frequent director co-work", top_3_directors[0][0],
+      "is:", round(np.mean(director_ratings), 2))
 print("The average rating for", actor_name_input, "is", round(np.mean(actors_ratings), 2))
 print("The average budget for", actor_name_input, "is", round(np.mean(actors_budget)))
 print("The average gross revenue for", actor_name_input, "is", round(np.mean(actors_gross), 2))
 print("The average profit for", round((np.mean(actors_gross) - np.mean(actors_budget)), 2))
-print("Top 3 most frequent genre for", actor_name_input, "is:", "\n",
+print("Top 3 most frequent genres for", actor_name_input, "is:", "\n",
       top_3_genre[0][0], "-", top_3_genre[0][1], "|", top_3_genre[1][0],
       "-", top_3_genre[1][1], "|", top_3_genre[2][0], "-", top_3_genre[2][1])
 print("Average", top_3_genre[0][0]," rating for whole database is", "-", round(np.mean(genre_ratings), 2), "\n",
-      "Average", top_3_genre[0][0], " rating for", actor_name_input, "is -", np.mean(actors_genre_ratings))
+      "Average", top_3_genre[0][0], " rating for", actor_name_input, "is -", round(np.mean(actors_genre_ratings), 2))
 
 
-print(round(np.corrcoef(num_of_votes, gross)[1][0], 2))
-print(round(np.corrcoef(num_of_votes, imdb_rating)[1][0], 2))
-print(round(np.corrcoef(imdb_rating, gross)[1][0], 2))
-print(round(np.corrcoef(budget, gross)[1][0], 2))
-print(round(np.corrcoef(budget, num_of_votes)[1][0], 2))
+plt.scatter(num_of_votes, gross)
+plt.scatter(num_of_votes, imdb_rating)
+plt.scatter(num_of_votes, budget)
+plt.scatter(imdb_rating, gross)
+plt.scatter(budget, gross)
+
+# print(round(np.corrcoef(num_of_votes, gross)[1][0], 2))
+# print(round(np.corrcoef(num_of_votes, imdb_rating)[1][0], 2))
+# print(round(np.corrcoef(num_of_votes, budget)[1][0], 2))
+# print(round(np.corrcoef(imdb_rating, gross)[1][0], 2))
+# print(round(np.corrcoef(budget, gross)[1][0], 2))
+

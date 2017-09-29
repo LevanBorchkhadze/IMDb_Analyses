@@ -2,6 +2,7 @@ import csv
 from collections import Counter
 import numpy as np
 import re
+import matplotlib.pyplot as plt
 
 director_name_input = input("Please input name of the director >")
 with open('clean_movie_data.csv', 'r',) as f:
@@ -93,11 +94,17 @@ print("Top 3 most frequent genre for", director_name_input, "is:", "\n",
       top_3_genre[0][0], "-", top_3_genre[0][1], "|", top_3_genre[1][0],
       "-", top_3_genre[1][1], "|", top_3_genre[2][0], "-", top_3_genre[2][1])
 print("Average", top_3_genre[0][0]," rating for whole database is", "-", round(np.mean(genre_ratings), 2), "\n",
-      "Average", top_3_genre[0][0], " rating for", director_name_input, "is -", np.mean(director_genre_ratings))
+      "Average", top_3_genre[0][0], " rating for", director_name_input, "is -", round(np.mean(director_genre_ratings)), 2)
 
 
-print(round(np.corrcoef(num_of_votes, gross)[1][0], 2))
-print(round(np.corrcoef(num_of_votes, imdb_rating)[1][0], 2))
-print(round(np.corrcoef(imdb_rating, gross)[1][0], 2))
-print(round(np.corrcoef(budget, gross)[1][0], 2))
-print(round(np.corrcoef(budget, num_of_votes)[1][0], 2))
+plt.scatter(num_of_votes, gross)
+plt.scatter(num_of_votes, imdb_rating)
+plt.scatter(num_of_votes, budget)
+plt.scatter(imdb_rating, gross)
+plt.scatter(budget, gross)
+
+# print(round(np.corrcoef(num_of_votes, gross)[1][0], 2))
+# print(round(np.corrcoef(num_of_votes, imdb_rating)[1][0], 2))
+# print(round(np.corrcoef(num_of_votes, budget)[1][0], 2))
+# print(round(np.corrcoef(imdb_rating, gross)[1][0], 2))
+# print(round(np.corrcoef(budget, gross)[1][0], 2))
